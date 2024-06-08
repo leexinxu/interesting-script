@@ -1,2 +1,1 @@
-# other_python
-其他python小脚本
+存放一些好用的python脚本
