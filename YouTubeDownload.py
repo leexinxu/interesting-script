@@ -18,7 +18,7 @@ ydl_opts = {
         'preferedformat': 'mp4'
     }],  # 如果不是mp4 转换视频为 mp4 格式
     'writesubtitles': True, # 下载字幕
-    'writeautomaticsub': True,  # 下载自动字幕
+    'writeautomaticsub': False,  # 下载自动字幕
     'subtitlesformat': 'srt',  # 指定字幕格式为 srt
     'subtitleslangs': ['en', 'zh-Hans'],  # 下载英语和中文（简体）字幕
     'postprocessors': [{  # 使用字幕转换后处理器将vtt字幕转换为srt格式

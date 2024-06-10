@@ -38,15 +38,6 @@ def is_workday(date):
     """判断给定日期是否为工作日"""
     return chinese_calendar.is_workday(date)
 
-# %%
-# 创建一个特定日期
-test_date = datetime(2024, 9, 14)
-
-# 检查该日期是否为工作日
-if is_workday(test_date):
-    print(f"{test_date.date()} 是工作日")
-else:
-    print(f"{test_date.date()} 不是工作日")
 
 # %%
 def job():
@@ -61,17 +52,11 @@ def job():
     else:
         stop_todesk()
 
-# %%
-job()
-
-# %%
-# 安排任务每10分钟调度一次job函数
-schedule.every(10).minutes.do(job)
 
 # %%
 while True:
-    # 每分钟检查一次是否有任务调度
-    schedule.run_pending()
-    time.sleep(60)
+    # 每10分钟调度一次job函数
+    job()
+    time.sleep(600)
 
 
