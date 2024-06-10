@@ -64,7 +64,7 @@ def upload(filepath, cookies):
     video = Data()
     video.title = title_part
     video.desc = filename[filename.rfind('【'):]
-    video.source = "破浪"
+    #video.source = "破浪"
     # 设置视频分区,122野生技能协会
     video.tid = 122
     video.set_tag(['破浪', '科技', '未来', 'AI', '人工智能', 'AGI'])
