@@ -62,12 +62,17 @@ def upload(filepath, cookies):
         title_part = title_part[:max_length].rsplit(' ', 1)[0]
 
     video = Data()
+    video.copyright = 1   # 1自制 2转载
     video.title = title_part
-    #video.desc = filename[filename.rfind('【'):]
-    video.source = f"破浪 {filename[filename.rfind('【'):]}"
-    # 设置视频分区,122野生技能协会
-    video.tid = 122
+    video.tid = 231 # 设置视频分区, 231 科技->计算机技术, https://biliup.github.io/tid-ref.html
     video.set_tag(['破浪', '科技', '未来', 'AI', '人工智能', 'AGI'])
+
+    if video.copyright == 1:
+        video.desc = filename[filename.rfind('【')+1:len(filename)-1]
+    else:
+        video.source = f"破浪 {filename[filename.rfind('【'):]}"
+
+    print(f'{video=}')
 
     with BiliBili(video) as bili:
         bili.login_by_cookies(cookie=cookies)
@@ -79,8 +84,6 @@ def upload(filepath, cookies):
         print(f'{video_part=}')
 
         video.append(video_part)  # 添加已经上传的视频
-
-        #video.cover = bili.cover_up('/cover_path').replace('http:', '')
         
         ret = bili.submit(submit_api='web')  # 提交视频
         print(f'{ret=}')
