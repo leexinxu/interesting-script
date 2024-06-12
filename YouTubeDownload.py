@@ -6,7 +6,7 @@ import os
 import shutil
 
 # %%
-def move_mp4_files(src_dir, dst_dir):
+def move_files_by_ext(src_dir, dst_dir, exts=None):
     # 检查源目录是否存在
     if not os.path.exists(src_dir):
         print(f"源目录 {src_dir} 不存在")
@@ -21,24 +21,24 @@ def move_mp4_files(src_dir, dst_dir):
         print(f"源目录 {src_dir} 是空的")
         return
 
-    # 计数器，用于跟踪移动的 .mp4 文件数量
-    mp4_files_count = 0
+    # 计数器，用于跟踪移动的文件数量
+    files_count = 0
 
-    # 移动源目录下的所有 .mp4 文件到目标目录
+    # 移动源目录下的所有视频文件和字幕文件到目标目录
     for filename in os.listdir(src_dir):
         src_file = os.path.join(src_dir, filename)
         dst_file = os.path.join(dst_dir, filename)
 
-        if os.path.isfile(src_file) and filename.lower().endswith('.mp4'):
+        if os.path.isfile(src_file) and (not exts or any(filename.lower().endswith(ext) for ext in exts)):
             shutil.move(src_file, dst_file)
             print(f"已移动 {src_file} 到 {dst_file}")
-            mp4_files_count += 1
+            files_count += 1
 
     # 根据计数器的值打印相应的消息
-    if mp4_files_count > 0:
-        print(f"所有 .mp4 文件已从 {src_dir} 移动到 {dst_dir}，共移动了 {mp4_files_count} 个文件。")
+    if files_count > 0:
+        print(f"{src_dir}, 目录下所有扩展名为: {exts}, 移动到 {dst_dir}, 共移动了 {files_count} 个文件.")
     else:
-        print("没有需要移动的 .mp4 文件")
+        print("没有需要移动的文件")
 
 # %%
 tmpdir = '/Volumes/Data/VideoTranslation/YouTubeDownloadTmp'  # 下载时保存路径
@@ -79,7 +79,7 @@ while True:
     with yt_dlp.YoutubeDL(ydl_opts) as ydl:
         ydl.download([playlist_url])
         # 移动文件
-        move_mp4_files(tmpdir, okdir)
+        move_files_by_ext(src_dir=tmpdir, dst_dir=okdir, exts=['.mp4', '.srt'])
 
     # 睡一分钟再去检查是否有新的下载
     time.sleep(60)
