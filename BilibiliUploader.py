@@ -114,6 +114,10 @@ def check_trans_completed_up(src_dir, dst_dir):
             # 上传完移动文件夹到TranslationCompletedUploadBilibiliMove
             move_folder(os.path.dirname(mp4_file), dst_dir)
 
+            # 防止提交过快
+            log("Waiting for 60 seconds before next upload...")
+            time.sleep(60)
+
         # 等待 60 秒再检查
         log("Waiting for 60 seconds before next check...")
         time.sleep(60)
