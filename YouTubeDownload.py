@@ -78,10 +78,12 @@ while True:
     # 下载播放列表
     with yt_dlp.YoutubeDL(ydl_opts) as ydl:
         ydl.download([playlist_url])
-        # 移动文件
-        move_files_by_ext(src_dir=tmpdir, dst_dir=okdir, exts=['.mp4', '.srt'])
-
+        
     # 睡一分钟再去检查是否有新的下载
     time.sleep(60)
+
+    # 移动文件
+    move_files_by_ext(src_dir=tmpdir, dst_dir=okdir, exts=['.mp4', '.srt'])
+
 
 
