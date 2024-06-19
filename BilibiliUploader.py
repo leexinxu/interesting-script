@@ -84,9 +84,12 @@ def upload(filepath, cookies):
         print(f'{video_part=}')
 
         video.append(video_part)  # 添加已经上传的视频
+        try:
+          ret = bili.submit(submit_api='web')  # 提交视频
+          print(f'{ret=}')
+        except Exception as e:
+          print(f'上传到B站发生异常，捕获，不影响后续处理，{e=}')
         
-        ret = bili.submit(submit_api='web')  # 提交视频
-        print(f'{ret=}')
 
 # %%
 cookies = {
