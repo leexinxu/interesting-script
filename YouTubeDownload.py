@@ -52,7 +52,7 @@ playlist_url = "https://www.youtube.com/playlist?list=PLxjtcx2z5_42QU_jjn1E9pX3Y
 ydl_opts = {
     'outtmpl': tmpdir + '/%(title)s.%(id)s.%(ext)s',  # 保存路径和文件名模板
     'download_archive': downloaded,  # 记录已下载视频的文件
-    'format': 'bestvideo[height<=720][ext=mp4]+bestaudio[ext=m4a]/best[height<=720][ext=mp4]/best[height<=720]',  # 下载最高质量的视频，不超过720p，并确保格式为MP4
+    'format': 'bestvideo[height<=1080][ext=mp4]+bestaudio[ext=m4a]/best[height<=1080][ext=mp4]/best[height<=1080]',  # 下载最高质量的视频，不超过1080p，并确保格式为MP4
     'merge_output_format': 'mp4',  # 合并下载的视频和音频为 mp4 格式
     'postprocessors': [{
         'key': 'FFmpegVideoConvertor',
