@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>pythonscript</string>
+
+    <key>ProgramArguments</key>
+    <array>
+        <string>/Applications/anaconda3/bin/python</string>
+        <string>/Volumes/Data/Project/interesting-script/WorkingDaysOpenToDesk.py</string>
+    </array>
+
+    <key>RunAtLoad</key>
+    <true/>
+    
+    <key>KeepAlive</key>
+    <true/>
+
+    <key>StartInterval</key>
+    <integer>600</integer> <!-- 设置重启间隔为600秒 -->
+</dict>
+</plist>
+
