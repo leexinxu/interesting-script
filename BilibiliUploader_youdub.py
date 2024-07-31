@@ -64,7 +64,7 @@ def upload(folder, cookies):
     if video.copyright == 1:
         video.desc = description
     else:
-        video.source = description
+        video.source = webpage_url
 
     print(f'{video=}')
 
@@ -118,9 +118,8 @@ def check_up(src_dir):
             log("防止提交过快，等待1分钟上传下一个。。。")
             time.sleep(60)
 
-        # 等待 60 秒再检查
-        log("等待60秒再检查。。。")
-        time.sleep(60)
+        log("等待10分钟再检查。。。")
+        time.sleep(60*10)
 
 
 # %%
