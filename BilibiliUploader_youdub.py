@@ -124,7 +124,7 @@ def check_up(src_dir):
 
 # %%
 # 启动自动视频翻译系统
-src_dir = '/Volumes/Data/AI/YouDub-webui/videos'
+src_dir = '/Volumes/Data/AI/YouDub-webui/videos_20240808'
 check_up(src_dir)
 
 
