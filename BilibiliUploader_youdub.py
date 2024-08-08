@@ -45,7 +45,7 @@ def upload(folder, cookies):
     title = f'【中配】{summary["title"]}【{title_English}】'
 
     # 去除空格并获取前10个标签
-    tags = [tag.replace(" ", "") for tag in tags][:10]
+    tags = [tag[:20].replace(" ", "") for tag in tags][:10]
 
     # 标题长度不能超过80个字符
     title = title[:80]
