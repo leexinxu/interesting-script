@@ -93,14 +93,13 @@ def upload(folder, cookies):
     return True    
 
 # %%
-cookies = {
-    'SESSDATA': 'f3fcfcf7,1733529039,ad1ea*61CjDDEelwr9JIeM99tZouwySvYaDbFGC-8Rpa-UkVxlTXb-QjZkZc4wewrI6TYZeopwMSVmlUb3J6N1lGS3h5YmdtMDdIX3lnRFFSOXNNd2pqSWVYZmV0LXp5dzRYa0VrTEgxTlVpUzhRVjQwQ21HMjFxNW5yWUplM1ZVekFBLTNJNWlncnZubUhnIIEC',
-    'bili_jct': '8b12cd2116875005ad57ea3af6362e96',
-    'sid': '5xbu4ygu',
-    
-    'DedeUserID': '3546691640756518',
-    'DedeUserID__ckMd5': 'd0df0ac5cb88bd0e',
-}
+# 破浪
+with open('data/bilibili_cookie_polang.json', 'r') as f:
+    cookie_polang = json.load(f)
+
+# 长风
+with open('data/bilibili_cookie_changfeng.json', 'r') as f:
+    cookies_changfeng = json.load(f)
 
 # %%
 # 每分钟检查一下是否有新翻译完成的视频，如果有，则上传B站
@@ -112,7 +111,7 @@ def check_up(src_dir):
         log(f"找到需要上传B站: {len(up_dir_list)}")
         for up_dir in up_dir_list:
             # 上传视频到B站
-            upload(up_dir, cookies)
+            upload(up_dir, cookies_changfeng)
 
             # 防止提交过快
             log("防止提交过快，等待1分钟上传下一个。。。")
