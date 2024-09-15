@@ -56,14 +56,12 @@ def upload(folder, cookies):
     print(f"标签：{tags}")
 
     video = Data()
-    video.copyright = 1   # 1自制 2转载
+    video.copyright = 2   # 1自制 2转载
     video.title = title
     video.tid = 231 # 设置视频分区, 231 科技->计算机技术, https://biliup.github.io/tid-ref.html
     video.set_tag(tags)
-
-    if video.copyright == 1:
-        video.desc = description
-    else:
+    video.desc = description
+    if video.copyright == 2:
         video.source = webpage_url
 
     print(f'{video=}')
