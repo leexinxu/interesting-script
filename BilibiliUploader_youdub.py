@@ -40,9 +40,15 @@ def upload(folder, cookies):
         data = json.load(f)
     title_English = data['title']
     webpage_url = data['webpage_url']
-    description = f'{summary["summary"]}\n\n{summary["author"]}\n\n{webpage_url}'
+    description = f'{summary["summary"]}\n{title_English}\n{summary["author"]}'
 
-    title = f'【中配】{summary["title"]}【{title_English}】'
+    # 获取视频分类
+    category = folder.split('/')[6]  # 根据路径结构提取
+    keywords = ['中配男', '多角色', '原音色克隆']
+    if any(keyword in category for keyword in keywords):
+        category = '中配'
+
+    title = f'【{category}】{summary["title"]}'
 
     # 去除空格并获取前10个标签
     tags = [tag[:20].replace(" ", "") for tag in tags][:10]
@@ -58,7 +64,7 @@ def upload(folder, cookies):
     video = Data()
     video.copyright = 2   # 1自制 2转载
     video.title = title
-    video.tid = 231 # 设置视频分区, 231 科技->计算机技术, https://biliup.github.io/tid-ref.html
+    video.tid = 232 # 设置视频分区, 231 科技->计算机技术, 232 科技->工业·工程·机械 , https://biliup.github.io/tid-ref.html
     video.set_tag(tags)
     video.desc = description
     if video.copyright == 2:
