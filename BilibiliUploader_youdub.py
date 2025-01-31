@@ -18,6 +18,75 @@ def find_videos(folder):
             dir_list.append(dir)
     return dir_list
 
+
+def get_series_map(bili_client):
+    """获取合集名称和ID的映射关系"""
+    try:
+        series_url = 'https://member.bilibili.com/x2/creative/web/seasons'
+        params = {
+            'pn': 1,
+            'ps': 30  # 增加每页数量以获取更多合集
+        }
+        
+        response = bili_client._BiliBili__session.get(series_url, params=params)
+        result = response.json()
+        
+        if result['code'] == 0:
+            series_map = {}
+            series_list = result['data']['seasons']
+            for series in series_list:
+                series_map[series['season']['title']] = series['sections']['sections'][0]['id']
+            return series_map
+        else:
+            print(f"获取合集列表失败: {result['message']}")
+            return {}
+            
+    except Exception as e:
+        print(f'获取合集列表失败：{e}')
+        return {}
+
+def add_to_series(bili_client, aid, title, series_name):
+    """添加视频到合集
+    Args:
+        bili_client: BiliBili客户端实例
+        aid: 视频的aid
+        title: 视频标题
+        series_name: 合集名
+    Returns:
+        bool: 是否成功添加到合集
+    """
+    try:
+        # 获取合集映射，合集名对应合集id
+        series_map = get_series_map(bili_client)
+        print(f'{series_map=}')
+        
+        if series_name not in series_map:
+            print(f'未找到合集: {series_name}')
+            return False
+            
+        series_id = series_map[series_name]
+        
+        # 调用添加到合集的API
+        add_series_url = 'https://member.bilibili.com/x2/creative/web/season/section/episodes/add?csrf='+bili_client._BiliBili__bili_jct
+        add_series_data = {
+            "sectionId": series_id,
+            "episodes": [{
+                "title": title,
+                "aid": aid
+            }]
+        }
+        print(f"添加到合集：{add_series_data=}")
+        response = bili_client._BiliBili__session.post(add_series_url, json=add_series_data)
+        series_result = response.json()
+        print(f"添加到合集结果：{series_result}")
+        
+        return series_result.get('code') == 0
+        
+    except Exception as e:
+        print(f'添加到合集失败：{e}')
+        return False
+
+
 # %%
 # 上传视频到B站
 def upload(folder, cookies):
@@ -86,6 +155,10 @@ def upload(folder, cookies):
             ret = bili.submit(submit_api='web')  # 提交视频
             print(f'{ret=}')
 
+            if ret['code'] == 0:
+                # 添加视频到合集
+                add_to_series(bili, ret['data']['aid'], title, category)
+
             with open(os.path.join(folder, 'bilibili.json'), 'w', encoding='utf-8') as f:
                 json.dump(ret, f, ensure_ascii=False, indent=4)
 
@@ -129,5 +202,6 @@ def check_up(src_dir):
 # 启动自动视频翻译系统
 src_dir = '/Volumes/Data/AI/YouDub-webui/videos'
 check_up(src_dir)
+
 
 
